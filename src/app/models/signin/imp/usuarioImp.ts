@@ -1,27 +1,30 @@
 import {Usuario} from '../usuario';
 
 export class UsuarioImp implements Usuario{
-  constructor(nombre: string, apellido: string, usuario: string, clave: string, estado: boolean){
+  constructor(id: string | undefined, nombre: string, rol: string, usuario: string, clave: string, estado: boolean){
     this.nombre = nombre;
-    this.apellido = apellido;
+    this.rol = rol;
     this.usuario = usuario;
     this.clave = clave;
     this.estado = estado;
+    this.id = id;
   }
 
   getUsuario(): Usuario{
     return {
+      id: this.id,
       nombre: this.nombre,
-      apellido: this.apellido,
+      rol: this.rol,
       usuario: this.usuario,
       clave: this.clave,
       estado: this.estado
     }
   }
 
-  apellido: string;
+  rol: string;
   clave: string;
   estado: boolean;
   nombre: string;
   usuario: string;
+  id?: string;
 }

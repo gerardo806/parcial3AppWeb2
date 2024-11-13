@@ -16,19 +16,12 @@ import {RouterLink} from '@angular/router';
   styleUrl: './auth.component.css'
 })
 export class AuthComponent implements OnInit {
-
-  private usuario: UsuarioImp;
   constructor(private http: ConfigDbService) {
-    this.usuario = new UsuarioImp('nombre1', 'apellido1', 'usuario1', 'clave1', true);
+
   }
 
   ngOnInit(): void {
-    //this.guardarUsuario();
+
   }
 
-  guardarUsuario(){
-    this.http.saveData(this.usuario).subscribe(data => {
-      console.log(data);
-    });
-  }
 }

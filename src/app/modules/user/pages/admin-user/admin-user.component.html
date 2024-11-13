@@ -1,13 +1,9 @@
 <div>
   <div class="d-flex justify-content-between">
-    <!--<button mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Nueva medición
-    </button>-->
-
     <div>
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         <i class="fa-solid fa-circle-plus"></i>
-        Nueva medición
+        Nueva usuario
       </button>
     </div>
 
@@ -76,60 +72,48 @@
           <input type="hidden" id="usuarioId" formControlName="id">
           <fieldset class="row">
             <div class="mb-3 col-lg-6 col-md-12 col-sm-12">
-              <label for="nic" class="form-label">Nombre completo</label>
-              <input formControlName="nombre" [class.is-invalid]="formUserControls.nombre.errors && formUserControls.nombre.touched" type="text" class="form-control" id="nic">
-              <div id="nicHelp" class="invalid-feedback" *ngIf="formUserControls.nombre.errors && formUserControls.nombre.touched">
+              <label for="nombre" class="form-label">Nombre completo</label>
+              <input formControlName="nombre" [class.is-invalid]="formUserControls.nombre.errors && formUserControls.nombre.touched" type="text" class="form-control" id="nombre">
+              <div id="nombreHelp" class="invalid-feedback" *ngIf="formUserControls.nombre.errors && formUserControls.nombre.touched">
                 <div *ngIf="formUserControls.nombre.errors.required">El nombre completo es requerido.</div>
-                <div *ngIf="formUserControls.nombre.errors.pattern">El nombre completo debe contener solo números.</div>
+                <div *ngIf="formUserControls.nombre.errors.pattern">El nombre completo es invalido.</div>
                 <div *ngIf="formUserControls.nombre.errors.minLength">El nombre debe tener 50 caracteres como maximo.</div>
                 <div *ngIf="formUserControls.nombre.errors.maxLength">El nombre debe tener 3 caracteres como minimo.</div>
               </div>
             </div>
 
-            <!--<div class="mb-3 col-lg-6 col-md-12 col-sm-12">
-              <label for="fechaMedicion" class="form-label">Nombre de usuario</label>
-              <input formControlName="fechaMedicion" [class.is-invalid]="formUserControls.fechaMedicion.errors && formUserControls.fechaMedicion.touched" type="date" class="form-control" id="fechaMedicion">
-              <div id="fechaMedicionHelp" class="invalid-feedback">Ingrese un fecha de medición.</div>
-            </div>
-
             <div class="mb-3 col-lg-6 col-md-12 col-sm-12">
-              <label for="kwMedido" class="form-label">Kilowatts medidos</label>
-              <input formControlName="kwMedido" [class.is-invalid]="formUserControls.kwMedido.errors && formUserControls.kwMedido.touched" type="number" class="form-control" id="kwMedido">
-              <div id="kwMedidoHelp" class="invalid-feedback" *ngIf="formUserControls.kwMedido.errors && formUserControls.kwMedido.touched">
-                <div *ngIf="formUserControls.kwMedido.errors.required">Ingrese la cantidad de kilowatts medidos.</div>
-                <div *ngIf="formUserControls.kwMedido.errors.pattern">El valor debe ser un número entero o decimal.</div>
+              <label for="usuario" class="form-label">Nombre de usuario</label>
+              <input formControlName="usuario" [class.is-invalid]="formUserControls.usuario.errors && formUserControls.usuario.touched" type="text" class="form-control" id="usuario">
+              <div id="usuarioHelp" class="invalid-feedback" *ngIf="formUserControls.nombre.errors && formUserControls.nombre.touched">
+                <div *ngIf="formUserControls.usuario.errors.required">El nombre de usuario es requerido.</div>
+                <div *ngIf="formUserControls.usuario.errors.pattern">El nombre completo es invalido.</div>
+                <div *ngIf="formUserControls.usuario.errors.minLength">El nombre debe tener 20 caracteres como maximo.</div>
+                <div *ngIf="formUserControls.usuario.errors.maxLength">El nombre debe tener 5 caracteres como minimo.</div>
               </div>
             </div>
 
-            <div class="mb-3 col-lg-6 col-md-12 col-sm-12">
-              <label for="personaMedicion" class="form-label">Persona que realizó la medición</label>
-              <input formControlName="personaMedicion" [class.is-invalid]="formUserControls.personaMedicion.errors && formUserControls.personaMedicion.touched" type="text" class="form-control" id="personaMedicion">
-              <div id="personaMedicionHelp" class="invalid-feedback" *ngIf="formUserControls.personaMedicion.errors && formUserControls.personaMedicion.touched">
-                <div *ngIf="formUserControls.personaMedicion.errors.required">Ingrese el nombre de la persona que realizó la medición.</div>
-                <div *ngIf="formUserControls.personaMedicion.errors.pattern">El nombre solo puede contener letras y espacios.</div>
-              </div>
-            </div> -->
           </fieldset>
           <hr>
-          <!--<fieldset class="row">
+          <fieldset class="row">
             <div class="mb-3 col-lg-6 col-md-12 col-sm-12">
-              <label for="duenoCuenta" class="form-label">Dueño de la cuenta</label>
-              <input formControlName="duenoCuenta" [class.is-invalid]="formUserControls.duenoCuenta.errors && formUserControls.duenoCuenta.touched" type="text" class="form-control" id="duenoCuenta">
-              <div id="duenoCuentaHelp" class="invalid-feedback" *ngIf="formUserControls.duenoCuenta.errors && formUserControls.duenoCuenta.touched">
-                <div *ngIf="formUserControls.duenoCuenta.errors.required">Ingrese el nombre del dueño de la cuenta.</div>
-                <div *ngIf="formUserControls.duenoCuenta.errors.pattern">El nombre solo puede contener letras y espacios.</div>
+              <label for="clave" class="form-label">Contraseña</label>
+              <input formControlName="clave" [class.is-invalid]="formUserControls.clave.errors && formUserControls.clave.touched" type="password" class="form-control" id="clave">
+              <div id="claveHelp" class="invalid-feedback" *ngIf="formUserControls.clave.errors && formUserControls.clave.touched">
+                <div *ngIf="formUserControls.clave.errors.required">La contraseña es requerida.</div>
+                <div *ngIf="formUserControls.clave.errors.maxLength">La contraseña debe tener 5 caracteres como minimo.</div>
               </div>
             </div>
 
             <div class="mb-3 col-lg-6 col-md-12 col-sm-12">
-              <label for="impuestoExtra" class="form-label">Impuesto Extra</label>
-              <input formControlName="impuestoExtra" [class.is-invalid]="formUserControls.impuestoExtra.errors && formUserControls.impuestoExtra.touched" type="number" class="form-control" id="impuestoExtra">
-              <div id="impuestoExtraHelp" class="invalid-feedback" *ngIf="formLoginControls.impuestoExtra.errors && formLoginControls.impuestoExtra.touched">
-                <div *ngIf="formLoginControls.impuestoExtra.errors.required">Ingrese el impuesto extra.</div>
-                <div *ngIf="formLoginControls.impuestoExtra.errors.pattern">El valor debe ser un número entero o decimal.</div>
+              <label for="confirmarClave" class="form-label">Confirmar contraseña</label>
+              <input formControlName="confirmarClave" [class.is-invalid]="formUserControls.confirmarClave.errors && formUserControls.confirmarClave.touched" type="password" class="form-control" id="confirmarClave">
+              <div id="nicHelp" class="invalid-feedback" *ngIf="formUserControls.confirmarClave.errors && formUserControls.confirmarClave.touched">
+                <div *ngIf="formUserControls.confirmarClave.errors.required">La contraseña es requerida.</div>
+                <div *ngIf="formUserControls.confirmarClave.errors.maxLength">La contraseña debe tener 5 caracteres como minimo.</div>
               </div>
             </div>
-          </fieldset>-->
+          </fieldset>
           <button type="submit" class="btn btn-success w-100">
             <i class="fa-solid fa-floppy-disk"></i>
             Guardar
@@ -137,7 +121,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar-modal-medicion" (click)="limpiarFormulario()">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar-modal-usuario" (click)="limpiarFormulario()">
           <i class="fa-solid fa-circle-xmark"></i>
           Cerrar
         </button>
