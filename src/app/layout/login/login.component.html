@@ -1,0 +1,29 @@
+<div class="bg-img-game">
+  <nav class="navbar bg-transparent navbar-dark navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Tecno Game</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" (click)="activate($event)" aria-current="page" routerLink="iniciar-sesion">Iniciar sesión</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="registro" (click)="activate($event)">Registrar</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="acerca-de" (click)="activate($event)">Acerca de</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mt-4">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>
+<app-footer-signin></app-footer-signin>

@@ -1,0 +1,147 @@
+<div>
+  <div class="d-flex justify-content-between">
+    <!--<button mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Nueva medición
+    </button>-->
+
+    <div>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <i class="fa-solid fa-circle-plus"></i>
+        Nueva medición
+      </button>
+    </div>
+
+    <mat-form-field>
+      <mat-label>Buscar</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Buscar">
+    </mat-form-field>
+  </div>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource!" matSort>
+
+      <!-- Columnas de la tabla -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="usuario">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
+        <td mat-cell *matCellDef="let element"> {{element.usuario}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="rol">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Rol </th>
+        <td mat-cell *matCellDef="let element"> {{element.rol}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+        <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="d-flex">
+            <button type="button" class="btn btn-warning mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="editarUsuario(element.id)">
+              <i class="fa-solid fa-pencil"></i>
+              Editar
+            </button>
+            <button type="button" class="btn btn-danger" (click)="eliminarUsuario(element.id)">
+              <i class="fa-solid fa-trash"></i>
+              Eliminar
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Formulario de medición</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="limpiarFormulario()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formUser" (ngSubmit)="registrarUsuario()">
+          <input type="hidden" id="usuarioId" formControlName="id">
+          <fieldset class="row">
+            <div class="mb-3 col-lg-6 col-md-12 col-sm-12">
+              <label for="nic" class="form-label">Nombre completo</label>
+              <input formControlName="nombre" [class.is-invalid]="formUserControls.nombre.errors && formUserControls.nombre.touched" type="text" class="form-control" id="nic">
+              <div id="nicHelp" class="invalid-feedback" *ngIf="formUserControls.nombre.errors && formUserControls.nombre.touched">
+                <div *ngIf="formUserControls.nombre.errors.required">El nombre completo es requerido.</div>
+                <div *ngIf="formUserControls.nombre.errors.pattern">El nombre completo debe contener solo números.</div>
+                <div *ngIf="formUserControls.nombre.errors.minLength">El nombre debe tener 50 caracteres como maximo.</div>
+                <div *ngIf="formUserControls.nombre.errors.maxLength">El nombre debe tener 3 caracteres como minimo.</div>
+              </div>
+            </div>
+
+            <!--<div class="mb-3 col-lg-6 col-md-12 col-sm-12">
+              <label for="fechaMedicion" class="form-label">Nombre de usuario</label>
+              <input formControlName="fechaMedicion" [class.is-invalid]="formUserControls.fechaMedicion.errors && formUserControls.fechaMedicion.touched" type="date" class="form-control" id="fechaMedicion">
+              <div id="fechaMedicionHelp" class="invalid-feedback">Ingrese un fecha de medición.</div>
+            </div>
+
+            <div class="mb-3 col-lg-6 col-md-12 col-sm-12">
+              <label for="kwMedido" class="form-label">Kilowatts medidos</label>
+              <input formControlName="kwMedido" [class.is-invalid]="formUserControls.kwMedido.errors && formUserControls.kwMedido.touched" type="number" class="form-control" id="kwMedido">
+              <div id="kwMedidoHelp" class="invalid-feedback" *ngIf="formUserControls.kwMedido.errors && formUserControls.kwMedido.touched">
+                <div *ngIf="formUserControls.kwMedido.errors.required">Ingrese la cantidad de kilowatts medidos.</div>
+                <div *ngIf="formUserControls.kwMedido.errors.pattern">El valor debe ser un número entero o decimal.</div>
+              </div>
+            </div>
+
+            <div class="mb-3 col-lg-6 col-md-12 col-sm-12">
+              <label for="personaMedicion" class="form-label">Persona que realizó la medición</label>
+              <input formControlName="personaMedicion" [class.is-invalid]="formUserControls.personaMedicion.errors && formUserControls.personaMedicion.touched" type="text" class="form-control" id="personaMedicion">
+              <div id="personaMedicionHelp" class="invalid-feedback" *ngIf="formUserControls.personaMedicion.errors && formUserControls.personaMedicion.touched">
+                <div *ngIf="formUserControls.personaMedicion.errors.required">Ingrese el nombre de la persona que realizó la medición.</div>
+                <div *ngIf="formUserControls.personaMedicion.errors.pattern">El nombre solo puede contener letras y espacios.</div>
+              </div>
+            </div> -->
+          </fieldset>
+          <hr>
+          <!--<fieldset class="row">
+            <div class="mb-3 col-lg-6 col-md-12 col-sm-12">
+              <label for="duenoCuenta" class="form-label">Dueño de la cuenta</label>
+              <input formControlName="duenoCuenta" [class.is-invalid]="formUserControls.duenoCuenta.errors && formUserControls.duenoCuenta.touched" type="text" class="form-control" id="duenoCuenta">
+              <div id="duenoCuentaHelp" class="invalid-feedback" *ngIf="formUserControls.duenoCuenta.errors && formUserControls.duenoCuenta.touched">
+                <div *ngIf="formUserControls.duenoCuenta.errors.required">Ingrese el nombre del dueño de la cuenta.</div>
+                <div *ngIf="formUserControls.duenoCuenta.errors.pattern">El nombre solo puede contener letras y espacios.</div>
+              </div>
+            </div>
+
+            <div class="mb-3 col-lg-6 col-md-12 col-sm-12">
+              <label for="impuestoExtra" class="form-label">Impuesto Extra</label>
+              <input formControlName="impuestoExtra" [class.is-invalid]="formUserControls.impuestoExtra.errors && formUserControls.impuestoExtra.touched" type="number" class="form-control" id="impuestoExtra">
+              <div id="impuestoExtraHelp" class="invalid-feedback" *ngIf="formLoginControls.impuestoExtra.errors && formLoginControls.impuestoExtra.touched">
+                <div *ngIf="formLoginControls.impuestoExtra.errors.required">Ingrese el impuesto extra.</div>
+                <div *ngIf="formLoginControls.impuestoExtra.errors.pattern">El valor debe ser un número entero o decimal.</div>
+              </div>
+            </div>
+          </fieldset>-->
+          <button type="submit" class="btn btn-success w-100">
+            <i class="fa-solid fa-floppy-disk"></i>
+            Guardar
+          </button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cerrar-modal-medicion" (click)="limpiarFormulario()">
+          <i class="fa-solid fa-circle-xmark"></i>
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
