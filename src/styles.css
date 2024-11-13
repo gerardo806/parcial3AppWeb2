@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+
+.fondo-login{
+  background: rgb(134,64,224);
+  background: linear-gradient(90deg, rgba(134,64,224,0.7) 0%, rgba(112,9,121,0.7) 55%, rgba(132,0,255,0.7) 100%);
+}
+
+.height-form{
+  height: 24rem;
+  width: 30rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.img-card-form{
+  height: 100%;
+  width: calc(100% - .2rem);
+  object-fit: cover;
+}
+
+.form-card-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
