@@ -40,11 +40,11 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
         <td mat-cell *matCellDef="let element">
           <div class="d-flex">
-            <button type="button" class="btn btn-warning mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="editarUsuario(element.id)">
+            <button type="button" class="btn btn-warning mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="editarUsuario(element.usuario)">
               <i class="fa-solid fa-pencil"></i>
               Editar
             </button>
-            <button type="button" class="btn btn-danger" (click)="eliminarUsuario(element.id)">
+            <button type="button" class="btn btn-danger" (click)="eliminarUsuario(element.usuario)">
               <i class="fa-solid fa-trash"></i>
               Eliminar
             </button>
@@ -70,6 +70,8 @@
       <div class="modal-body">
         <form [formGroup]="formUser" (ngSubmit)="registrarUsuario()">
           <input type="hidden" id="usuarioId" formControlName="id">
+          <input type="hidden" id="usuarioPk" formControlName="pk">
+
           <fieldset class="row">
             <div class="mb-3 col-lg-6 col-md-12 col-sm-12">
               <label for="nombre" class="form-label">Nombre completo</label>
@@ -85,7 +87,7 @@
             <div class="mb-3 col-lg-6 col-md-12 col-sm-12">
               <label for="usuario" class="form-label">Nombre de usuario</label>
               <input formControlName="usuario" [class.is-invalid]="formUserControls.usuario.errors && formUserControls.usuario.touched" type="text" class="form-control" id="usuario">
-              <div id="usuarioHelp" class="invalid-feedback" *ngIf="formUserControls.nombre.errors && formUserControls.nombre.touched">
+              <div id="usuarioHelp" class="invalid-feedback" *ngIf="formUserControls.usuario.errors && formUserControls.usuario.touched">
                 <div *ngIf="formUserControls.usuario.errors.required">El nombre de usuario es requerido.</div>
                 <div *ngIf="formUserControls.usuario.errors.pattern">El nombre completo es invalido.</div>
                 <div *ngIf="formUserControls.usuario.errors.minLength">El nombre debe tener 20 caracteres como maximo.</div>
@@ -101,16 +103,20 @@
               <input formControlName="clave" [class.is-invalid]="formUserControls.clave.errors && formUserControls.clave.touched" type="password" class="form-control" id="clave">
               <div id="claveHelp" class="invalid-feedback" *ngIf="formUserControls.clave.errors && formUserControls.clave.touched">
                 <div *ngIf="formUserControls.clave.errors.required">La contraseña es requerida.</div>
-                <div *ngIf="formUserControls.clave.errors.maxLength">La contraseña debe tener 5 caracteres como minimo.</div>
+                <div *ngIf="formUserControls.clave.errors?.['minLength']">
+                  {{ formUserControls.clave.errors?.['minLength'].message }}
+                </div>
               </div>
             </div>
 
             <div class="mb-3 col-lg-6 col-md-12 col-sm-12">
               <label for="confirmarClave" class="form-label">Confirmar contraseña</label>
               <input formControlName="confirmarClave" [class.is-invalid]="formUserControls.confirmarClave.errors && formUserControls.confirmarClave.touched" type="password" class="form-control" id="confirmarClave">
-              <div id="nicHelp" class="invalid-feedback" *ngIf="formUserControls.confirmarClave.errors && formUserControls.confirmarClave.touched">
+              <div id="confirmarClaveHelp" class="invalid-feedback" *ngIf="formUserControls.confirmarClave.errors && formUserControls.confirmarClave.touched">
                 <div *ngIf="formUserControls.confirmarClave.errors.required">La contraseña es requerida.</div>
-                <div *ngIf="formUserControls.confirmarClave.errors.maxLength">La contraseña debe tener 5 caracteres como minimo.</div>
+                <div *ngIf="formUserControls.confirmarClave.errors?.['minLength']">
+                  {{ formUserControls.confirmarClave.errors?.['minLength'].message }}
+                </div>
               </div>
             </div>
           </fieldset>

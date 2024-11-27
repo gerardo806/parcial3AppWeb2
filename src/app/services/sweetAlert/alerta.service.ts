@@ -1,5 +1,6 @@
 import {Injectable, Predicate} from '@angular/core';
 import Swal from 'sweetalert2';
+import {FunctionExpr} from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,7 @@ export class AlertaService {
     });
   }
 
-  question(titulo: string, mensaje: string, funSuccess: Predicate<void>){
+  question(titulo: string, mensaje: string, funSuccess: Function){
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: "btn btn-success",

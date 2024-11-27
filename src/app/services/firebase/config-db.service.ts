@@ -15,14 +15,21 @@ export class ConfigDbService {
     return this.http.post(this.uri + collection + '.json', data);
   }
 
+  updateData(usuario: string, data: any, collection: string){
+    return this.http.put(`${this.uri}${collection}/${usuario}.json`, data);
+  }
+
   getAllData(collection: string){
     return this.http.get(this.uri + collection + '.json');
   }
 
   getDataByField(value: string, field: string, collection: string) {
     const url = `${this.uri}${collection}.json?orderBy="${field}"&equalTo="${value}"`;
-    console.log(url);
     return this.http.get<any[]>(url);
+  }
+
+  deleteData(usuario: string, collection: string) {
+    return this.http.delete(`${this.uri}${collection}/${usuario}.json`);
   }
 
 }
