@@ -34,7 +34,11 @@ export class AuthComponent implements OnInit {
     const auth = getAuth(app);
 
     try{
-      const userCredential: UserCredential = await this.loginEmail(auth, credential.email, credential.password)
+      const userCredential: UserCredential = await this.loginEmail(auth, credential.email, credential.password);
+
+      if(userCredential.user){
+        console.log('Usuario logueado');
+      }
     }catch (e){
       console.error(e);
     }
