@@ -1,26 +1,38 @@
 import {Component, OnInit} from '@angular/core';
-import {NgOptimizedImage} from '@angular/common';
-import {RouterLink} from '@angular/router';
+import {NgIf, NgOptimizedImage} from '@angular/common';
+import {Router, RouterLink} from '@angular/router';
 import {ConnectConfigDbService} from '../../../../services/firebase/connect-config-db.service';
 import {autenticarUsuarioImp} from '../../../../models/signin/imp/autenticarUsuarioImp';
 import {autenticarUsuario} from '../../../../models/signin/autenticarUsuario';
-import {createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
-import firebase from 'firebase/compat';
-import UserCredential = firebase.auth.UserCredential;
-import Auth = firebase.auth.Auth;
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword, getAuth, Auth, UserCredential } from 'firebase/auth';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AuthUserService} from '../../../../services/firebase/auth/auth-user.service';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
   imports: [
     NgOptimizedImage,
-    RouterLink
+    RouterLink,
+    FormsModule,
+    ReactiveFormsModule,
+    NgIf
   ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css'
 })
 export class AuthComponent implements OnInit {
-  constructor(private configDb: ConnectConfigDbService) {
+  public formUser: FormGroup;
+  constructor(
+    private configDb: ConnectConfigDbService,
+    private fb: FormBuilder,
+    private router: Router,
+    private authUserService: AuthUserService
+  ) {
+    this.formUser = this.fb.group({
+      correo: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')]],
+      clave: ['', [Validators.required]]
+    });
   }
 
   ngOnInit(): void {
@@ -28,7 +40,7 @@ export class AuthComponent implements OnInit {
   }
 
   async login(){
-    const usuario: autenticarUsuarioImp = new autenticarUsuarioImp('admin', 'admin');
+    const usuario: autenticarUsuarioImp = new autenticarUsuarioImp(this.formUser.value.correo, this.formUser.value.clave);
     const credential: autenticarUsuario = usuario.getCredenciales();
     const app = this.configDb.initDb();
     const auth = getAuth(app);
@@ -37,15 +49,26 @@ export class AuthComponent implements OnInit {
       const userCredential: UserCredential = await this.loginEmail(auth, credential.email, credential.password);
 
       if(userCredential.user){
-        console.log('Usuario logueado');
+        this.authUserService.setLogin(true);
+        await this.router.navigate(['/usuario/admin-usuario']);
+        return;
       }
+
+      this.authUserService.setLogin(false);
     }catch (e){
       console.error(e);
     }
   }
 
   private async loginEmail(auth: Auth, email: string, password: string): Promise<UserCredential>{
-    return await createUserWithEmailAndPassword(auth, email, password);
+    return await signInWithEmailAndPassword(auth, email, password);
   }
 
+  public get formUserControls(): any {
+    return this.formUser.controls;
+  }
+
+  limpiarFormulario(){
+    this.formUser.reset();
+  }
 }

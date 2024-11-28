@@ -1,21 +1,38 @@
 <div class="form-card-center opacity-100">
   <section class="row fondo-login shadow">
-    <article class="col-lg-6 col-md-8 col-sm-12">
-      <form class="text-white height-form d-flex flex-column align-content-center justify-content-center">
+    <article class="col-lg-6 col-md-12 col-sm-12">
+      <form class="text-white height-form d-flex flex-column align-content-center justify-content-center"
+            [formGroup]="formUser" (ngSubmit)="login()">
         <h2>Iniciar Sesión</h2>
         <div class="mb-3">
           <label for="usuario" class="form-label">Correo electronico</label>
-          <input type="email" class="form-control" placeholder="Ejemplo: william24@email.es" id="usuario" aria-describedby="usuarioHelp">
-          <div id="usuarioHelp" class="form-text text-white">Ingrese su nombre de usuario.</div>
+          <input type="email"
+                 class="form-control" placeholder="Ejemplo: william24@email.es"
+                 id="usuario"
+                 aria-describedby="usuarioHelp"
+                 formControlName="correo"
+                 [class.is-invalid]="formUserControls.correo.errors && formUserControls.correo.touched">
+          <div id="correoHelp" class="invalid-feedback" *ngIf="formUserControls.correo.errors && formUserControls.correo.touched">
+            <div *ngIf="formUserControls.correo.errors.required">El correo es requerido.</div>
+            <div *ngIf="formUserControls.correo.errors.pattern">El correo es invalido.</div>
+          </div>
         </div>
         <div class="mb-3">
           <label for="clave" class="form-label">Clave</label>
-          <input type="password" class="form-control" id="clave">
+          <input
+            type="password"
+            class="form-control"
+            id="clave"
+            formControlName="clave"
+            [class.is-invalid]="formUserControls.clave.errors && formUserControls.clave.touched">
+          <div id="claveHelp" class="invalid-feedback" *ngIf="formUserControls.clave.errors && formUserControls.clave.touched">
+            <div *ngIf="formUserControls.clave.errors.required">La contraseña es requerido.</div>
+          </div>
         </div>
-        <div class="mb-3 form-check">
+        <!--<div class="mb-3 form-check">
           <input type="checkbox" class="form-check-input" id="exampleCheck1">
           <label class="form-check-label" for="exampleCheck1">Mostrar contraseña</label>
-        </div>
+        </div>-->
         <button type="submit" class="btn btn-dark w-100">Ingresar</button>
       </form>
 
@@ -28,7 +45,7 @@
       </section>
 
     </article>
-    <article class="col-lg-6 col-md-4 col-sm-12 px-0">
+    <article class="col-lg-6 d-md-table d-sm-none px-0">
       <div class="w-100 h-100">
         <img src="img/imagen-login.png" class="img-fluid rounded-start" alt="game">
       </div>
