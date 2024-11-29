@@ -1,41 +1,60 @@
 <div class="form-card-center">
-  <form class="row fondo-login shadow">
-  <legend class="my-5 text-white text-center">Crear cuenta</legend>
-    <fieldset class="col-lg-6 col-md-6 col-sm-12">
-      <section class="text-white height-form-signup">
+  <form class="row fondo-login shadow px-md-4 px-lg-4"
+        [formGroup]="formUser" (ngSubmit)="signup()">
+    <legend class="my-5 text-white text-center">Crear cuenta</legend>
+    <fieldset class="col-12">
+      <section class="text-white">
         <div class="mb-3">
-          <label for="usuario" class="form-label">Nombre completo</label>
-          <input type="email" class="form-control" placeholder="Ejemplo: Emilio Hernández" id="usuario" aria-describedby="usuarioHelp">
-          <div id="usuarioHelp" class="form-text text-white">Ingrese su nombre de completo.</div>
+          <label for="usuario" class="form-label">Correo electrónico</label>
+          <input [class.is-invalid]="formUserControls.correo.errors && formUserControls.correo.touched"
+            type="email" class="form-control"
+            placeholder="Ejemplo: william24@email.es" id="usuario"
+            aria-describedby="usuarioHelp" formControlName="correo">
+          <div id="usuarioHelp" class="form-text text-white">Ingrese su correo.</div>
+          <div id="correoHelp" class="invalid-feedback" *ngIf="formUserControls.correo.errors && formUserControls.correo.touched">
+            <div *ngIf="formUserControls.correo.errors.required">El correo es requerido.</div>
+            <div *ngIf="formUserControls.correo.errors.pattern">El correo es invalido.</div>
+            <div *ngIf="formUserControls.correo.errors.length">EL correo es muy corto.</div>
+          </div>
         </div>
+
+      </section>
+    </fieldset>
+    <fieldset class="col-lg-6 col-md-6 col-sm-12">
+      <section class="text-white">
         <div class="mb-3">
           <label for="clave" class="form-label">Contraseña</label>
-          <input type="password" class="form-control" id="clave">
+          <input type="password" class="form-control" id="clave" formControlName="clave"
+                 [class.is-invalid]="formUserControls.clave.errors && formUserControls.clave.touched">
+          <div id="claveHelp" class="invalid-feedback" *ngIf="formUserControls.clave.errors && formUserControls.clave.touched">
+            <div *ngIf="formUserControls.clave.errors.required">La contraseña es requerido.</div>
+            <div *ngIf="formUserControls.clave.errors.length">La contraseña debe tener 6 caracteres como mínimo.</div>
+          </div>
         </div>
         <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">Mostrar contraseña</label>
+          <input type="checkbox" class="form-check-input" id="mostrarClave" (click)="mostrarClaveForm('clave')">
+          <label class="form-check-label" for="mostrarClave">Mostrar contraseña</label>
         </div>
       </section>
     </fieldset>
-    <fieldset class="col-lg-6 col-md-6 col-sm-12 px-0">
-      <section class="text-white height-form-signup">
-        <div class="mb-3">
-          <label for="usuario" class="form-label">Nombre de usuario</label>
-          <input type="email" class="form-control" placeholder="Ejemplo: William24" id="usuario" aria-describedby="usuarioHelp">
-          <div id="usuarioHelp" class="form-text text-white">Ingrese su nombre de usuario.</div>
-        </div>
+    <fieldset class="col-lg-6 col-md-6 col-sm-12">
+      <section class="text-white">
         <div class="mb-3">
           <label for="clave" class="form-label">Confirmar contraseña</label>
-          <input type="password" class="form-control" id="clave">
+          <input type="password" class="form-control" id="confirmarClave" formControlName="confirmarClave"
+                 [class.is-invalid]="formUserControls.confirmarClave.errors && formUserControls.confirmarClave.touched">
+          <div id="confirmarClaveHelp" class="invalid-feedback" *ngIf="formUserControls.confirmarClave.errors && formUserControls.confirmarClave.touched">
+            <div *ngIf="formUserControls.confirmarClave.errors.required">La contraseña es requerido.</div>
+            <div *ngIf="formUserControls.confirmarClave.errors.length">La contraseña debe tener 6 caracteres como mínimo.</div>
+          </div>
         </div>
         <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">Mostrar contraseña</label>
+          <input type="checkbox" class="form-check-input" id="mostrarConfirmarClave" (click)="mostrarClaveForm('confirmarClave')">
+          <label class="form-check-label" for="mostrarConfirmarClave">Mostrar contraseña</label>
         </div>
       </section>
     </fieldset>
-    <div class="w-btn">
+    <div>
       <button type="submit" class="btn btn-dark w-100 mb-5">Registrar</button>
     </div>
   </form>

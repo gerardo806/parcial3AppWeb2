@@ -10,3 +10,12 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.is-invalid {
+  border-width: 4px;
+  border-color: #ff6666;
+}
+
+.invalid-feedback {
+  color: #ff6666;
+}

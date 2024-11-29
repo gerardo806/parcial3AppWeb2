@@ -10,8 +10,7 @@ export const routes: Routes = [
   {
   path: 'credenciales',
   component: LoginComponent,
-  loadChildren: () => import('./modules/signin/signin.module').then(m => m.SigninModule),
-  canActivate: [AuthGuard]
+  loadChildren: () => import('./modules/signin/signin.module').then(m => m.SigninModule)
   },
   {
     path: 'usuario',
